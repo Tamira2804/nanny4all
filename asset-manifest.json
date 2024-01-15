@@ -1,0 +1,12 @@
+{
+  "files": {
+    "main.js": "/nanny4all/static/js/main.78512824.js",
+    "static/media/hero.png": "/nanny4all/static/media/hero.1a4de8dcaf52de68ff1d.png",
+    "static/media/sprite.svg": "/nanny4all/static/media/sprite.2a16bbc362437337c33e0d66f76b19d6.svg",
+    "index.html": "/nanny4all/index.html",
+    "main.78512824.js.map": "/nanny4all/static/js/main.78512824.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.78512824.js"
+  ]
+}
