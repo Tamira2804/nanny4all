@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const CardThumb = styled.div`
+  min-width: 100%;
   display: flex;
   border-radius: 24px;
   background-color: var(--colors-bg-primary);
@@ -8,8 +9,9 @@ export const CardThumb = styled.div`
   gap: 24px;
 `;
 export const AvatarBlock = styled.div`
-  width: 120px;
+  min-width: 120px;
   height: 120px;
+
   padding: 12px;
   border-radius: 30px;
   border: 2px solid rgba(240, 63, 59, 0.2);
@@ -104,4 +106,18 @@ export const CharactersItem = styled.li`
   }
 `;
 // Block--3
-export const Description = styled.p``;
+export const Description = styled.p`
+  color: var(--colors-text);
+`;
+
+export const Btn = styled.button`
+  color: var(--colors-title);
+  font-size: 16px;
+  font-weight: var(--fw-medium);
+  line-height: 24px; /* 150% */
+
+  text-decoration: underline;
+  background: none;
+  border: none;
+  cursor: pointer;
+`;

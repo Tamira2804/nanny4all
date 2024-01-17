@@ -17,6 +17,18 @@ const nannies = [
     education: "Bachelor’s in Early Childhood Education, First Aid Certified",
     description:
       "I love children and have been working with them for over 5 years. I believe in creating a positive and nurturing environment for kids. I also love outdoor activities and crafts.",
+    reviews: [
+      {
+        author: "Olga K.",
+        rating: "5.0",
+        text: "Anna is wonderful! My kids loved her and she was always punctual.",
+      },
+      {
+        author: "Petr S.",
+        rating: "4.0",
+        text: "She's great, but sometimes she had to reschedule on short notice.",
+      },
+    ],
   },
   {
     id: 2,
@@ -80,16 +92,14 @@ const nannies = [
       "I love children and have been working with them for over 5 years. I believe in creating a positive and nurturing environment for kids. I also love outdoor activities and crafts.",
     reviews: [
       {
-        name: "Olga K.",
-        rating: 5,
-        review:
-          "Anna is wonderful! My kids loved her and she was always punctual.",
+        author: "Olga K.",
+        rating: "5.0",
+        text: "Anna is wonderful! My kids loved her and she was always punctual.",
       },
       {
-        name: "Petr S.",
-        rating: 4,
-        review:
-          "She's great, but sometimes she had to reschedule on short notice.",
+        author: "Petr S.",
+        rating: "4.5",
+        text: "She's great, but sometimes she had to reschedule on short notice.",
       },
     ],
   },

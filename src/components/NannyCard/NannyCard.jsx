@@ -1,5 +1,4 @@
-import React, { Suspense } from "react";
-import { Link, Outlet } from "react-router-dom";
+import React, { useState } from "react";
 import {
   CardThumb,
   AvatarBlock,
@@ -14,8 +13,10 @@ import {
   CharactersList,
   CharactersItem,
   Description,
+  Btn,
 } from "./NannyCard.styled";
 import sprite from "../../assets/icons/sprite.svg";
+import NannyReviews from "components/NannyReviews";
 
 const NannyCard = ({ nanny }) => {
   const {
@@ -30,7 +31,15 @@ const NannyCard = ({ nanny }) => {
     characters,
     education,
     description,
+    reviews = [],
   } = nanny;
+
+  const [showMore, setShowMore] = useState(false);
+
+  const handleReadMore = () => {
+    setShowMore(!showMore);
+  };
+
   return (
     <CardThumb>
       <AvatarBlock>
@@ -82,10 +91,11 @@ const NannyCard = ({ nanny }) => {
 
         <Description>{description}</Description>
         <div className="reviews">
-          <Link to={"reviews"}>Cast</Link>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Outlet />
-          </Suspense>
+          {showMore ? (
+            <NannyReviews reviews={reviews} />
+          ) : (
+            <Btn onClick={handleReadMore}>Read More</Btn>
+          )}
         </div>
       </InfoBlock>
     </CardThumb>
