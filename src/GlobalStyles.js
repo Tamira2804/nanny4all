@@ -37,6 +37,7 @@ export const GlobalStyles = createGlobalStyle`
 /* Colors */
     --price-color: #38CD3E;
     --heart-color: #F03F3B;
+    
 
     --red: #F03F3B;
     --red-light: rgba(240, 63, 59, 0.20);
@@ -46,7 +47,9 @@ export const GlobalStyles = createGlobalStyle`
 
     --blue: #0957C3;
     --blue-light: rgba(9, 87, 195, 0.20);
-
+    
+/*Other */
+    --transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   * {
@@ -61,16 +64,21 @@ export const GlobalStyles = createGlobalStyle`
       'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: var(--colors-bg-secondary);
 
     --colors-title: #11101C;
     --colors-title-inverse: #FBFBFB;
-    --colors-title-gray:#8A8A89;
+    --colors-title-gray: #8A8A89;
     --colors-text: rgba(17, 16, 28, 0.50);
     --colors-select: rgba(17, 16, 28, 0.30);
+    
 
-    --colors-border: rgba(251, 251, 251, 0.40);
+    --colors-border: rgba(17, 16, 28, 0.10);
+    --colors-border-aspect: rgba(17, 16, 28, 0.20);
     --colors-bg-primary: #FBFBFB;
     --colors-bg-secondary: #F3F3F3;
+    --colors-bg-overlay: rgba(11, 11, 11, 0.60);
+
 
     --accent: var(--blue);
     --accent-light: var(--blue-light);

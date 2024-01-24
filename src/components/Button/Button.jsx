@@ -1,9 +1,22 @@
 import React from "react";
 import { Btn } from "./Button.styled";
 
-const Button = ({ width, height, text, onClick }) => {
+const Button = ({
+  width,
+  height,
+  text,
+  onClick,
+  type = "submit",
+  disabled = false,
+}) => {
   return (
-    <Btn onClick={onClick} width={width} height={height}>
+    <Btn
+      type={type}
+      onClick={onClick}
+      width={width}
+      height={height}
+      disabled={disabled}
+    >
       {text}
     </Btn>
   );

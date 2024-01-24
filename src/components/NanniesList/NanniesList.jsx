@@ -1,6 +1,7 @@
 import React from "react";
 import { List } from "./NanniesList.styled";
 import NannyCard from "components/NannyCard";
+import { Formik } from "formik";
 
 const nannies = [
   {
@@ -19,11 +20,13 @@ const nannies = [
       "I love children and have been working with them for over 5 years. I believe in creating a positive and nurturing environment for kids. I also love outdoor activities and crafts.",
     reviews: [
       {
+        id: 1,
         author: "Olga K.",
         rating: "5.0",
         text: "Anna is wonderful! My kids loved her and she was always punctual.",
       },
       {
+        id: 2,
         author: "Petr S.",
         rating: "4.0",
         text: "She's great, but sometimes she had to reschedule on short notice.",
@@ -92,11 +95,13 @@ const nannies = [
       "I love children and have been working with them for over 5 years. I believe in creating a positive and nurturing environment for kids. I also love outdoor activities and crafts.",
     reviews: [
       {
+        id: 1,
         author: "Olga K.",
         rating: "5.0",
         text: "Anna is wonderful! My kids loved her and she was always punctual.",
       },
       {
+        id: 2,
         author: "Petr S.",
         rating: "4.5",
         text: "She's great, but sometimes she had to reschedule on short notice.",
@@ -107,11 +112,13 @@ const nannies = [
 
 const NanniesList = () => {
   return (
-    <List>
-      {nannies.map((nanny) => (
-        <NannyCard nanny={nanny} />
-      ))}
-    </List>
+    <Formik>
+      <List>
+        {nannies.map((nanny) => (
+          <NannyCard key={nanny.id} nanny={nanny} />
+        ))}
+      </List>
+    </Formik>
   );
 };
 

@@ -7,6 +7,7 @@ export const Btn = styled.button`
 
   width: ${(props) => props.width || "100%"};
   height: ${(props) => props.height || "48px"};
+  margin-top: 40px;
 
   font-size: 16px;
   font-weight: 500;
@@ -25,4 +26,29 @@ export const Btn = styled.button`
     background-color: var(--colors-title-inverse);
     border: 1px solid var(--accent);
   }
+
+  transition: color var(--transition), background-color var(--transition);
+  /* 
+  ${({ disabled }) =>
+    disabled &&
+    `
+    background-color: var(--accent-light);
+    cursor: not-allowed;
+
+    &:hover,
+    &:focus {
+    background-color: var(--accent-light);
+    color: var(--colors-title-inverse);
+    border: none;
+  }
+  `};
+
+  ${({ disabled }) =>
+    !disabled &&
+    `
+    color: var(--accent);
+    background-color: var(--colors-title-inverse);
+    border: 1px solid var(--accent);
+  }
+  `}; */
 `;
