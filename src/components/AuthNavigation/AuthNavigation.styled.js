@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 
-export const AuthBtn = styled(Link)`
+export const AuthBtn = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,8 +10,9 @@ export const AuthBtn = styled(Link)`
   border: 1px solid var(--colors-border);
 
   font-size: 16px;
-  color: var(--colors-title);
+  color: inherit;
   background-color: transparent;
+  border: 1px solid var(--colors-border);
 
   gap: 8px;
   transition: transform 200ms linear;
@@ -20,6 +21,7 @@ export const AuthBtn = styled(Link)`
   &:focus {
     border: 1px solid var(--accent);
     background-color: var(--accent);
+    color: var(--colors-title-inverse);
     cursor: pointer;
   }
 `;

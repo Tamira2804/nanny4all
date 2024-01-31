@@ -9,11 +9,11 @@ export const Nav = styled.nav`
 export const Link = styled(NavLink)`
   font-size: 16px;
   font-weight: var(--fw-regular);
-  color: var(--colors-title);
+  color: inherit;
 
   &:hover,
   &:focus {
-    border-bottom: 2px solid var(--accent);
+    color: var(--accent);
     cursor: pointer;
   }
 `;

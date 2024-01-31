@@ -1,18 +1,20 @@
 import React from "react";
-// import { useAuth } from '../../../hooks/useAuth';
+import { useAuth } from "../../hooks/useAuth";
 
-// import AuthNavigation from '../AuthNavigation/AuthNavigation';
-// import UserBar from '../UserBar/UserBar';
+import { db, auth } from "../../firebase";
+import { ref, get } from "firebase/database";
+
+import UserBar from "../UserBar/UserBar";
 import { AuthContainer } from "./AuthBar.styled";
 import AuthNavigation from "components/AuthNavigation/AuthNavigation";
 
-const AuthBar = ({ name = true }) => {
-  // const { isLoggedIn } = useAuth();
+const AuthBar = () => {
+  const { isLoggedIn } = useAuth();
 
   return (
     <AuthContainer>
       {/* {isLoggedIn ? <UserBar name={name} /> : <AuthNavigation />} */}
-      <AuthNavigation />
+      {isLoggedIn ? <UserBar /> : <AuthNavigation />}
     </AuthContainer>
   );
 };

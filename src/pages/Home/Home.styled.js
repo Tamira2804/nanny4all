@@ -1,7 +1,16 @@
 import styled from "styled-components";
-import Image from "../../../assets/images/hero.png";
+import Image from "assets/images/hero.png";
+import { Link } from "react-router-dom";
 
 export const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+`;
+
+export const Hero = styled.div`
+  position: absolute;
+  top: 0;
   width: 100%;
   height: 736px;
   display: flex;
@@ -40,7 +49,7 @@ export const Text = styled.p`
 
   margin-bottom: 44px;
 `;
-export const Btn = styled.button`
+export const Btn = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: center;

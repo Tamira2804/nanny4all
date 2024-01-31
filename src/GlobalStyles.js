@@ -73,7 +73,8 @@ export const GlobalStyles = createGlobalStyle`
     --colors-select: rgba(17, 16, 28, 0.30);
     
 
-    --colors-border: rgba(17, 16, 28, 0.10);
+    --colors-border: rgba(251, 251, 251, 0.40);
+    --colors-border2: rgba(17, 16, 28, 0.10);
     --colors-border-aspect: rgba(17, 16, 28, 0.20);
     --colors-bg-primary: #FBFBFB;
     --colors-bg-secondary: #F3F3F3;

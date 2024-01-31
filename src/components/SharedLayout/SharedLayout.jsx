@@ -6,7 +6,6 @@ import { Outlet } from "react-router-dom";
 const SharedLayout = () => {
   return (
     <Container>
-      <Header />
       <Suspense fallback={null}>
         <Outlet />
       </Suspense>

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setUser } from "../../redux/auth/authSlice";
 
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase";
+import { register } from "../../redux/auth/authOperations";
+import { db, auth } from "../../firebase";
+import { ref, set } from "firebase/database";
 
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -13,6 +13,8 @@ import ErrorComponent from "components/ErrorComponent";
 import Button from "components/Button";
 
 import {
+  Title,
+  Text,
   StyledForm,
   Label,
   InputForEmailName,
@@ -49,7 +51,16 @@ const initialValues = {
   password: "",
 };
 
-const RegisterForm = () => {
+function writeUserData(userId, name, email) {
+  const reference = ref(db, "users/" + userId);
+
+  set(reference, {
+    username: name,
+    email: email,
+  });
+}
+
+const RegisterForm = ({ onClose }) => {
   const dispatch = useDispatch();
 
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -68,75 +79,87 @@ const RegisterForm = () => {
     }
   };
 
-  const handleRegister = (email, password) => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(({ user }) => {
-        console.log(user);
-        dispatch(
-          setUser({
-            email: user.email,
-            id: user.uid,
-            token: user.accessToken,
-          })
-        );
-      })
+  const handleRegister = async ({ name, email, password }, { resetForm }) => {
+    try {
+      const actionResult = await dispatch(register({ email, password }));
+      const {
+        meta: { requestStatus },
+        payload,
+      } = actionResult;
 
-      .catch((error) => {
-        console.log("errorCode", error.code);
-        console.log("errorMessage", error.message);
-      });
+      if (requestStatus === "fulfilled") {
+        const user = auth.currentUser;
+        if (user) {
+          const userId = user.uid;
+          await writeUserData(userId, name, email);
+        }
+      } else if (requestStatus === "rejected") {
+        throw new Error(payload);
+      }
+    } catch (error) {
+      console.error("Помилка при реєстрації:", error.message);
+    }
+    onClose();
+    resetForm();
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={schema}
-      onSubmit={handleRegister}
-      validate={handleValidation}
-    >
-      {({ errors, touched }) => (
-        <StyledForm>
-          <Label>
-            <InputForEmailName
-              autoComplete="on"
-              type="text"
-              name="name"
-              placeholder="Name"
-              error={touched.name && errors.name ? 1 : 0}
-              valid={touched.name && !errors.name ? 1 : 0}
-            />
-            <ErrorComponent name="name" />
-          </Label>
-          <Label>
-            <InputForEmailName
-              autoComplete="on"
-              type="email"
-              name="email"
-              placeholder="Email"
-              error={touched.email && errors.email ? 1 : 0}
-              valid={touched.email && !errors.email ? 1 : 0}
-            />
-            <ErrorComponent name="email" />
-          </Label>
-          <Label>
-            <InputForPasswords
-              type={passwordVisible ? "text" : "password"}
-              name="password"
-              placeholder="Password"
-              error={touched.password && errors.password ? 1 : 0}
-              valid={touched.password && !errors.password ? 1 : 0}
-            />
-            <ShowPasswordButton
-              isOpen={passwordVisible}
-              onClick={togglePasswordVisibility}
-            />
-            <ErrorComponent name="password" />
-          </Label>
+    <>
+      <Title>Register</Title>
+      <Text>
+        Thank you for your interest in our platform! In order to register, we
+        need some information. Please provide us with the following information.
+      </Text>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={schema}
+        onSubmit={handleRegister}
+        validate={handleValidation}
+      >
+        {({ errors, touched }) => (
+          <StyledForm>
+            <Label>
+              <InputForEmailName
+                autoComplete="on"
+                type="text"
+                name="name"
+                placeholder="Name"
+                error={touched.name && errors.name ? 1 : 0}
+                valid={touched.name && !errors.name ? 1 : 0}
+              />
+              <ErrorComponent name="name" />
+            </Label>
+            <Label>
+              <InputForEmailName
+                autoComplete="on"
+                type="email"
+                name="email"
+                placeholder="Email"
+                error={touched.email && errors.email ? 1 : 0}
+                valid={touched.email && !errors.email ? 1 : 0}
+              />
+              <ErrorComponent name="email" />
+            </Label>
+            <Label>
+              <InputForPasswords
+                type={passwordVisible ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+                error={touched.password && errors.password ? 1 : 0}
+                valid={touched.password && !errors.password ? 1 : 0}
+              />
+              <ShowPasswordButton
+                isOpen={passwordVisible}
+                onClick={togglePasswordVisibility}
+              />
+              <ErrorComponent name="password" />
+            </Label>
 
-          <Button disabled={!isFormValid} type="submit" text="Sign Up" />
-        </StyledForm>
-      )}
-    </Formik>
+            <Button disabled={!isFormValid} type="submit" text="Sign Up" />
+          </StyledForm>
+        )}
+      </Formik>
+    </>
   );
 };
 

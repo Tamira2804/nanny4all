@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setUser } from "../../redux/auth/authSlice";
 
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase";
+import { logIn } from "../../redux/auth/authOperations";
+import { db, auth } from "../../firebase";
+import { ref, get } from "firebase/database";
 
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -13,6 +13,8 @@ import ErrorComponent from "components/ErrorComponent";
 import Button from "components/Button";
 
 import {
+  Title,
+  Text,
   StyledForm,
   Label,
   InputForEmailName,
@@ -43,7 +45,7 @@ const initialValues = {
   password: "",
 };
 
-const LoginForm = () => {
+const LoginForm = ({ onClose }) => {
   const dispatch = useDispatch();
 
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -62,55 +64,93 @@ const LoginForm = () => {
     }
   };
 
-  const handleLogin = (email, password) => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then(console.log)
+  const getUserData = async (userId) => {
+    const userDataRef = ref(db, `users/${userId}`);
+    const snapshot = await get(userDataRef);
 
-      .catch((error) => {
-        console.log("errorCode", error.code);
-        console.log("errorMessage", error.message);
-      });
+    if (snapshot.exists()) {
+      return snapshot.val();
+    }
+
+    return null;
+  };
+
+  const handleLogin = async ({ email, password }, { resetForm }) => {
+    try {
+      const actionResult = await dispatch(logIn({ email, password }));
+      const {
+        meta: { requestStatus },
+        payload,
+      } = actionResult;
+
+      if (requestStatus === "fulfilled") {
+        const user = auth.currentUser;
+        if (user) {
+          const userId = user.uid;
+          const userData = await getUserData(userId);
+
+          if (userData) {
+            const userName = userData.username;
+            console.log("User's name:", userName);
+          }
+        }
+      } else if (requestStatus === "rejected") {
+        throw new Error(payload);
+      }
+    } catch (error) {
+      console.error("Помилка логін:", error.message);
+    }
+
+    onClose();
+    resetForm();
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={schema}
-      onSubmit={handleLogin}
-      validate={handleValidation}
-    >
-      {({ errors, touched }) => (
-        <StyledForm>
-          <Label>
-            <InputForEmailName
-              autoComplete="on"
-              type="email"
-              name="email"
-              placeholder="Email"
-              error={touched.email && errors.email ? 1 : 0}
-              valid={touched.email && !errors.email ? 1 : 0}
-            />
-            <ErrorComponent name="email" />
-          </Label>
-          <Label>
-            <InputForPasswords
-              type={passwordVisible ? "text" : "password"}
-              name="password"
-              placeholder="Password"
-              error={touched.password && errors.password ? 1 : 0}
-              valid={touched.password && !errors.password ? 1 : 0}
-            />
-            <ShowPasswordButton
-              isOpen={passwordVisible}
-              onClick={togglePasswordVisibility}
-            />
-            <ErrorComponent name="password" />
-          </Label>
+    <>
+      <Title>Login</Title>
+      <Text>
+        Welcome back! Please enter your credentials to access your account and
+        continue your babysitter search.
+      </Text>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={schema}
+        onSubmit={handleLogin}
+        validate={handleValidation}
+      >
+        {({ errors, touched }) => (
+          <StyledForm>
+            <Label>
+              <InputForEmailName
+                autoComplete="on"
+                type="email"
+                name="email"
+                placeholder="Email"
+                error={touched.email && errors.email ? 1 : 0}
+                valid={touched.email && !errors.email ? 1 : 0}
+              />
+              <ErrorComponent name="email" />
+            </Label>
+            <Label>
+              <InputForPasswords
+                type={passwordVisible ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+                error={touched.password && errors.password ? 1 : 0}
+                valid={touched.password && !errors.password ? 1 : 0}
+              />
+              <ShowPasswordButton
+                isOpen={passwordVisible}
+                onClick={togglePasswordVisibility}
+              />
+              <ErrorComponent name="password" />
+            </Label>
 
-          <Button disabled={!isFormValid} type="submit" text="Login" />
-        </StyledForm>
-      )}
-    </Formik>
+            <Button disabled={!isFormValid} type="submit" text="Login" />
+          </StyledForm>
+        )}
+      </Formik>
+    </>
   );
 };
 

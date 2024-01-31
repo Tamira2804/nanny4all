@@ -1,6 +1,26 @@
 import styled from "styled-components";
 import { Form, Field } from "formik";
 
+export const Title = styled.h1`
+  color: var(--colors-title);
+
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 48px; /* 120% */
+  letter-spacing: -0.8px;
+
+  margin-bottom: 20px;
+`;
+
+export const Text = styled.p`
+  color: var(--colors-text);
+
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px; /* 125% */
+
+  margin-bottom: 40px;
+`;
 export const StyledForm = styled(Form)``;
 
 export const Label = styled.label`
