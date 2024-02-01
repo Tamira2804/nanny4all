@@ -1,28 +1,29 @@
 import React from "react";
 import sprite from "../../assets/icons/sprite.svg";
 import { useDispatch } from "react-redux";
-// import { useNavigate } from "react-router-dom";
-import { logOut } from "../../redux/auth/authOperations";
-import { useAuth } from "../../hooks/useAuth";
-import { Wrapper, Typography, Img, Svg, AuthBtn } from "./UserBar.styled";
+
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase";
+
+import { Wrapper, Avatar, Svg, Typography, AuthBtn } from "./UserBar.styled";
+import { logOutUser } from "../../redux/auth/authSlice";
 
 const UserBar = () => {
-  const { user } = useAuth();
   const dispatch = useDispatch();
-  //   const navigate = useNavigate();
+  const user = auth.currentUser;
 
   const handleLogout = () => {
-    dispatch(logOut());
-
-    // navigate("/login", { replace: true });
+    dispatch(logOutUser());
   };
 
   return (
     <Wrapper>
-      <Svg>
-        <use href={`${sprite}#icon-mdi-user`} />
-      </Svg>
-      <Typography>{user.name}</Typography>
+      <Avatar>
+        <Svg>
+          <use href={`${sprite}#icon-mdi-user`} />
+        </Svg>
+      </Avatar>
+      <Typography>{user.displayName}</Typography>
       <AuthBtn onClick={handleLogout}>Log out</AuthBtn>
     </Wrapper>
   );
