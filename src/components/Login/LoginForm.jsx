@@ -20,6 +20,7 @@ import {
   InputForEmailName,
   InputForPasswords,
 } from "./LoginForm.styled";
+import ErrorModal from "components/ErrorModal";
 
 const schema = yup.object().shape({
   email: yup
@@ -87,6 +88,7 @@ const LoginForm = ({ onClose }) => {
       onClose();
     } catch (error) {
       console.error("Помилка логін:", error.message);
+      alert("Login or password are invalid");
     }
   };
 

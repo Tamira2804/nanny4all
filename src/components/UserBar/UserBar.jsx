@@ -2,7 +2,6 @@ import React from "react";
 import sprite from "../../assets/icons/sprite.svg";
 import { useDispatch } from "react-redux";
 
-import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase";
 
 import { Wrapper, Avatar, Svg, Typography, AuthBtn } from "./UserBar.styled";
@@ -23,7 +22,7 @@ const UserBar = () => {
           <use href={`${sprite}#icon-mdi-user`} />
         </Svg>
       </Avatar>
-      <Typography>{user.displayName}</Typography>
+      {user && <Typography>{user.displayName}</Typography>}
       <AuthBtn onClick={handleLogout}>Log out</AuthBtn>
     </Wrapper>
   );

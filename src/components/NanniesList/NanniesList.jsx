@@ -3,6 +3,9 @@ import { List } from "./NanniesList.styled";
 import NannyCard from "components/NannyCard";
 import { Formik } from "formik";
 
+import { db } from "../../firebase";
+import { ref } from "firebase/database";
+
 const nannies = [
   {
     id: 1,
@@ -110,7 +113,12 @@ const nannies = [
   },
 ];
 
+const list = ref(db, "babysitters/");
+
 const NanniesList = () => {
+  // const elementsOnPage = 3;
+  console.log("List", list);
+
   return (
     <Formik>
       <List>

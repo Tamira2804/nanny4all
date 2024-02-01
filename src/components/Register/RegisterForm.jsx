@@ -93,10 +93,14 @@ const RegisterForm = ({ onClose }) => {
         })
       );
       console.log("newUser", newUser);
+
+      onClose();
     } catch (error) {
       console.error("Помилка при реєстрації:", error.message);
+      if (error.message.includes("already-in-use")) {
+        alert("It looks like you are already registered");
+      }
     }
-    onClose();
   };
 
   return (

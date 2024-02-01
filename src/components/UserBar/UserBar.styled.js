@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
   font-weight: 500;
   line-height: 20px; /* 111.111% */
   letter-spacing: -0.18px;
-  color: var(--colors-title-inverse);
+  color: inherit;
 `;
 export const Avatar = styled.div`
   display: flex;
