@@ -17,22 +17,25 @@ import {
 } from "./NannyCard.styled";
 import sprite from "../../assets/icons/sprite.svg";
 import NannyReviews from "components/NannyReviews";
+import { calculateAge } from "../../helpers/calculateAge";
 
 const NannyCard = ({ nanny }) => {
   const {
-    avatar,
+    avatar_url,
     name,
     location,
     rating,
-    price,
-    age,
+    price_per_hour,
+    birthday,
     experience,
-    kids,
-    characters,
+    kids_age,
+    characters = [],
     education,
-    description,
+    about,
     reviews = [],
   } = nanny;
+
+  const age = calculateAge(birthday);
 
   const [showMore, setShowMore] = useState(false);
 
@@ -43,7 +46,7 @@ const NannyCard = ({ nanny }) => {
   return (
     <CardThumb>
       <AvatarBlock>
-        <Image src={avatar} alt={name} />
+        <Image src={avatar_url} alt={name} />
       </AvatarBlock>
       <InfoBlock>
         <TitleBlock>
@@ -65,7 +68,7 @@ const NannyCard = ({ nanny }) => {
               Rating: {rating}
             </AspectItem>
             <AspectItem>
-              Price / 1 hour: <span>{price}$</span>
+              Price / 1 hour: <span>{price_per_hour}$</span>
             </AspectItem>
           </AspectList>
         </TitleBlock>
@@ -75,11 +78,11 @@ const NannyCard = ({ nanny }) => {
             {age}
           </CharactersItem>
           <CharactersItem>
-            <span>Experience: </span> {experience} years
+            <span>Experience: </span> {experience}
           </CharactersItem>
           <CharactersItem>
             <span>Kids Age: </span>
-            {kids.from} to {kids.to} old
+            {kids_age}
           </CharactersItem>
           <CharactersItem>
             <span>Characters:</span> {characters}
@@ -89,7 +92,7 @@ const NannyCard = ({ nanny }) => {
           </CharactersItem>
         </CharactersList>
 
-        <Description>{description}</Description>
+        <Description>{about}</Description>
         <div className="reviews">
           {showMore ? (
             <NannyReviews reviews={reviews} />

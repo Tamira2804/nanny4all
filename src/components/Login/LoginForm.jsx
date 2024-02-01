@@ -20,7 +20,6 @@ import {
   InputForEmailName,
   InputForPasswords,
 } from "./LoginForm.styled";
-import ErrorModal from "components/ErrorModal";
 
 const schema = yup.object().shape({
   email: yup

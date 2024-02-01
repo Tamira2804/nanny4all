@@ -7,7 +7,6 @@ import AuthNavigation from "components/AuthNavigation/AuthNavigation";
 
 const AuthBar = () => {
   const { isLoggedIn } = useAuth();
-  console.log("AuthBar isLoggedIn", isLoggedIn);
 
   return (
     <AuthContainer>
