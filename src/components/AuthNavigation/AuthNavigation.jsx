@@ -23,6 +23,7 @@ function AuthNavigation() {
   const closeRegister = () => {
     setIsOpenRegister(false);
   };
+
   return (
     <>
       <AuthBtn onClick={openLogin}>Log In</AuthBtn>

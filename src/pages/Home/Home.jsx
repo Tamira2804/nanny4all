@@ -15,7 +15,7 @@ import Header from "components/Header/Header";
 const Home = () => {
   return (
     <Wrapper>
-      <Header fontColor="var(--colors-title-inverse)" />
+      <Header />
       <Hero>
         <Left>
           <Title>Make Life Easier for the Family:</Title>

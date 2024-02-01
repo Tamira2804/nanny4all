@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { logIn } from "../../redux/auth/authOperations";
-import { db, auth } from "../../firebase";
-import { ref, get } from "firebase/database";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
+import { setUser } from "../../redux/auth/authSlice";
 
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -64,45 +64,31 @@ const LoginForm = ({ onClose }) => {
     }
   };
 
-  const getUserData = async (userId) => {
-    const userDataRef = ref(db, `users/${userId}`);
-    const snapshot = await get(userDataRef);
-
-    if (snapshot.exists()) {
-      return snapshot.val();
-    }
-
-    return null;
-  };
-
-  const handleLogin = async ({ email, password }, { resetForm }) => {
+  const handleLogin = async (values) => {
+    console.log("Values", values.email);
     try {
-      const actionResult = await dispatch(logIn({ email, password }));
-      const {
-        meta: { requestStatus },
-        payload,
-      } = actionResult;
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+      const loginedUser = userCredentials.user;
+      const newUser = dispatch(
+        setUser({
+          name: loginedUser.displayName,
+          email: loginedUser.email,
+          id: loginedUser.uid,
+          token: loginedUser.accessToken,
+        })
+      );
+      console.log("newUserLogin", newUser);
 
-      if (requestStatus === "fulfilled") {
-        const user = auth.currentUser;
-        if (user) {
-          const userId = user.uid;
-          const userData = await getUserData(userId);
-
-          if (userData) {
-            const userName = userData.username;
-            console.log("User's name:", userName);
-          }
-        }
-      } else if (requestStatus === "rejected") {
-        throw new Error(payload);
-      }
+      console.log("loginedUser", loginedUser);
+      onClose();
     } catch (error) {
       console.error("Помилка логін:", error.message);
+      alert("Login or password are invalid");
     }
-
-    onClose();
-    resetForm();
   };
 
   return (
@@ -115,7 +101,7 @@ const LoginForm = ({ onClose }) => {
       <Formik
         initialValues={initialValues}
         validationSchema={schema}
-        onSubmit={handleLogin}
+        onSubmit={(values) => handleLogin(values)}
         validate={handleValidation}
       >
         {({ errors, touched }) => (

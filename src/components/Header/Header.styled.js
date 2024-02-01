@@ -6,9 +6,9 @@ export const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 20px 96px;
-  color: ${(props) => props.fontColor || "var(--colors-title)"};
+  color: var(--colors-title-inverse);
 
-  background: transparent;
+  background: ${(props) => props.background || "transparent"};
   position: relative;
   z-index: 1;
 `;

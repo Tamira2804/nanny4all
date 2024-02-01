@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { register } from "../../redux/auth/authOperations";
-import { db, auth } from "../../firebase";
-import { ref, set } from "firebase/database";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth } from "../../firebase";
+import { setUser } from "../../redux/auth/authSlice";
 
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -51,15 +51,6 @@ const initialValues = {
   password: "",
 };
 
-function writeUserData(userId, name, email) {
-  const reference = ref(db, "users/" + userId);
-
-  set(reference, {
-    username: name,
-    email: email,
-  });
-}
-
 const RegisterForm = ({ onClose }) => {
   const dispatch = useDispatch();
 
@@ -79,28 +70,37 @@ const RegisterForm = ({ onClose }) => {
     }
   };
 
-  const handleRegister = async ({ name, email, password }, { resetForm }) => {
+  const handleRegister = async (values) => {
     try {
-      const actionResult = await dispatch(register({ email, password }));
-      const {
-        meta: { requestStatus },
-        payload,
-      } = actionResult;
+      const actionResult = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+      const user = actionResult.user;
+      console.log("actionResult.user", actionResult.user);
 
-      if (requestStatus === "fulfilled") {
-        const user = auth.currentUser;
-        if (user) {
-          const userId = user.uid;
-          await writeUserData(userId, name, email);
-        }
-      } else if (requestStatus === "rejected") {
-        throw new Error(payload);
-      }
+      await updateProfile(user, {
+        displayName: values.name,
+      });
+
+      const newUser = dispatch(
+        setUser({
+          name: user.displayName,
+          email: user.email,
+          id: user.uid,
+          token: user.accessToken,
+        })
+      );
+      console.log("newUser", newUser);
+
+      onClose();
     } catch (error) {
       console.error("Помилка при реєстрації:", error.message);
+      if (error.message.includes("already-in-use")) {
+        alert("It looks like you are already registered");
+      }
     }
-    onClose();
-    resetForm();
   };
 
   return (
@@ -113,7 +113,7 @@ const RegisterForm = ({ onClose }) => {
       <Formik
         initialValues={initialValues}
         validationSchema={schema}
-        onSubmit={handleRegister}
+        onSubmit={(values) => handleRegister(values)}
         validate={handleValidation}
       >
         {({ errors, touched }) => (

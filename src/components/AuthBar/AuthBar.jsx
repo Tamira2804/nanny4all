@@ -1,9 +1,6 @@
 import React from "react";
 import { useAuth } from "../../hooks/useAuth";
 
-import { db, auth } from "../../firebase";
-import { ref, get } from "firebase/database";
-
 import UserBar from "../UserBar/UserBar";
 import { AuthContainer } from "./AuthBar.styled";
 import AuthNavigation from "components/AuthNavigation/AuthNavigation";
