@@ -3,7 +3,9 @@ import { List } from "./NanniesList.styled";
 import NannyCard from "components/NannyCard";
 import { Formik } from "formik";
 
-const NanniesList = ({ nannies }) => {
+const NanniesList = ({ nannies, filterValue }) => {
+  const elementsOnPage = 3;
+
   return (
     <Formik>
       <List>
