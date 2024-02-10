@@ -36,8 +36,8 @@ const Nannies = () => {
 
   return (
     <>
+      <Header background={"var(--accent)"} />
       <Wrapper>
-        <Header background={"var(--accent)"} />
         <Filters setFilterValue={setFilterValue} />
         <NanniesList nannies={nannies} filterValue={filterValue} />
       </Wrapper>

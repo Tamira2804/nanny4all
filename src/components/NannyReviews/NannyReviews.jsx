@@ -41,7 +41,12 @@ const NannyReviews = ({ reviews }) => {
             </Item>
           ))
         )}
-        <Button text="Make an appointment" width="215px" onClick={openModal} />
+        <Button
+          text="Make an appointment"
+          width="215px"
+          onClick={openModal}
+          alignSelf="flex-start"
+        />
       </List>
       {isOpenModal && (
         <Modal onClose={closeModal} isOpenModal={isOpenModal}>
