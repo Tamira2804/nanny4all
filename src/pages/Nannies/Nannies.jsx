@@ -9,7 +9,7 @@ import Filters from "components/Filters";
 import Header from "components/Header/Header";
 
 const Nannies = () => {
-  const [filterValue, setFilterValue] = useState(null);
+  const [filterValue, setFilterValue] = useState("alphabetAsc");
   const [nannies, setNannies] = useState([]);
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const Nannies = () => {
       <Wrapper>
         <Header background={"var(--accent)"} />
         <Filters setFilterValue={setFilterValue} />
-        <NanniesList filterValue={filterValue} nannies={nannies} />
+        <NanniesList nannies={nannies} filterValue={filterValue} />
       </Wrapper>
     </>
   );

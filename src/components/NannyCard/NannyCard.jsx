@@ -24,7 +24,7 @@ const NannyCard = ({ nanny }) => {
     avatar_url,
     name,
     location,
-    rating,
+    rating = 0,
     price_per_hour,
     birthday,
     experience,

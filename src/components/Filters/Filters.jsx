@@ -13,7 +13,7 @@ const filterOptions = [
 
 const Filters = ({ setFilterValue }) => {
   const handleFilterChange = (selectedFilter) => {
-    setFilterValue(selectedFilter);
+    setFilterValue(selectedFilter.value);
   };
 
   return (
