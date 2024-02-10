@@ -6,6 +6,8 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+
+  margin: 32px;
 `;
 
 export const Hero = styled.div`

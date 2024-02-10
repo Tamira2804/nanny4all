@@ -7,7 +7,7 @@ const Button = ({
   text,
   onClick,
   type = "submit",
-  disabled = false,
+  alignSelf,
 }) => {
   return (
     <Btn
@@ -15,7 +15,7 @@ const Button = ({
       onClick={onClick}
       width={width}
       height={height}
-      disabled={disabled}
+      alignSelf={alignSelf}
     >
       {text}
     </Btn>

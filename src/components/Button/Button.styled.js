@@ -4,6 +4,7 @@ export const Btn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  align-self: ${(props) => props.alignSelf || "center"};
 
   width: ${(props) => props.width || "100%"};
   height: ${(props) => props.height || "48px"};
@@ -28,27 +29,4 @@ export const Btn = styled.button`
   }
 
   transition: color var(--transition), background-color var(--transition);
-  /* 
-  ${({ disabled }) =>
-    disabled &&
-    `
-    background-color: var(--accent-light);
-    cursor: not-allowed;
-
-    &:hover,
-    &:focus {
-    background-color: var(--accent-light);
-    color: var(--colors-title-inverse);
-    border: none;
-  }
-  `};
-
-  ${({ disabled }) =>
-    !disabled &&
-    `
-    color: var(--accent);
-    background-color: var(--colors-title-inverse);
-    border: 1px solid var(--accent);
-  }
-  `}; */
 `;
