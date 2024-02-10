@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   CardThumb,
+  HeartIcon,
   AvatarBlock,
   Image,
   InfoBlock,
@@ -38,13 +39,23 @@ const NannyCard = ({ nanny }) => {
   const age = calculateAge(birthday);
 
   const [showMore, setShowMore] = useState(false);
+  const [favorite, setFavorite] = useState(false);
 
   const handleReadMore = () => {
     setShowMore(!showMore);
   };
 
+  const handleFavorite = () => {
+    setFavorite(!favorite);
+  };
+
   return (
     <CardThumb>
+      <HeartIcon onClick={handleFavorite}>
+        <svg>
+          <use href={`${sprite}#icon-heart-stroke`} />
+        </svg>
+      </HeartIcon>
       <AvatarBlock>
         <Image src={avatar_url} alt={name} />
       </AvatarBlock>

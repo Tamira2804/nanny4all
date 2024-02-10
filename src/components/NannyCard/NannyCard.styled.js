@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const CardThumb = styled.div`
+  position: relative;
   min-width: 100%;
   display: flex;
   border-radius: 24px;
@@ -8,6 +9,30 @@ export const CardThumb = styled.div`
   padding: 24px;
   gap: 24px;
 `;
+export const HeartIcon = styled.button`
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 26px;
+  height: 26px;
+  background-color: transparent;
+  border: none;
+  fill: transparent;
+  stroke: var(--colors-title);
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    stroke: var(--accent);
+    fill: var(--accent);
+  }
+
+  & svg {
+    width: 26px;
+    height: 26px;
+  }
+`;
+
 export const AvatarBlock = styled.div`
   min-width: 120px;
   height: 120px;
